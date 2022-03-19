@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from flask_session import Session
 from pymongo import MongoClient
+# Imports for Amazon SES
+import boto3
+from botocore.exceptions import ClientError
 
 # Configure app - Static folder is where images and javascript live
 app = Flask(__name__, static_folder='static', static_url_path='/static')
@@ -15,6 +18,21 @@ Session(app)
 client = MongoClient(app.config.get("CONNECTION_STRING"))
 db = client.get_database("hackathon")
 print(db.list_collection_names())
+
+
+def get_cart():
+    # Get the items from the session and pull details from Mongo
+    cart_list = []
+    if "cart" in session:
+        # Iterate over every item and check if the item is in the cart
+        # Not very performant, but we aren't working at that kind of scale
+        for document in db.get_collection("items").find({}):
+            # The str wraps are very necessary don't ask
+            if str(document["productID"]) in session["cart"]:
+                # Add the cart quantity to the item and put it in the list
+                document["quantity"] = session["cart"][str(document["productID"])]
+                cart_list.append(document)
+    return cart_list
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -67,23 +85,60 @@ def itemPage():
 
 @app.route('/checkout')
 def checkout():
-    return render_template("checkout.html")
+    return render_template("checkout.html", items=get_cart())
+
+
+@app.route('/sendCheckout', methods=['POST'])
+def send_checkout():
+    email = request.form.get("email")
+    if email and "cart" in session:
+        # Send an email
+        # Create a new SES resource and specify a region.
+        aws_client = boto3.client('ses', region_name="us-east-1",
+                                  aws_access_key_id=app.config['AWS_ID'],
+                                  aws_secret_access_key=app.config['AWS_SECRET'],
+                                  # aws_session_token=app.config['AWS_TOKEN']
+                                  )
+        SENDER = "goose@emily.engineer"
+        # Try to send the email.
+        try:
+            # Provide the contents of the email.
+            response = aws_client.send_email(
+                Destination={
+                    'ToAddresses': [
+                        email,
+                    ],
+                },
+                Message={
+                    'Body': {
+                        'Html': {
+                            'Charset': "UTF-8",
+                            'Data': "<h1>HI</h1>",
+                        },
+                        'Text': {
+                            'Charset': "UTF-8",
+                            'Data': "Hi! Your email doesn't support HTML",
+                        },
+                    },
+                    'Subject': {
+                        'Charset': "UTF-8",
+                        'Data': "Hackathon project receipt",
+                    },
+                },
+                Source=SENDER
+            )
+        # Display an error if something goes wrong.
+        except ClientError as e:
+            return e.response['Error']['Message']
+        else:
+            return "Email sent! Message ID:" + response['MessageId']
+    else:
+        return "You have either no email or nothing in bag. Wyd even?"
 
 
 @app.route('/bag')
 def bag():
-    # Get the items from the session and pull details from Mongo
-    cart_list = []
-    if "cart" in session:
-        # Iterate over every item and check if the item is in the cart
-        # Not very performant, but we aren't working at that kind of scale
-        for document in db.get_collection("items").find({}):
-            # The str wraps are very necessary don't ask
-            if str(document["productID"]) in session["cart"]:
-                # Add the cart quantity to the item and put it in the list
-                document["quantity"] = session["cart"][str(document["productID"])]
-                cart_list.append(document)
-    return render_template("bag.html", items=cart_list)
+    return render_template("bag.html", items=get_cart())
 
 
 @app.route('/about')
