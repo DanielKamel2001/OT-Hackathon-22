@@ -2,7 +2,7 @@
 cfg.py
 
 # Flask session filesystem
-flask_session
+flask_session/
 
 # Generic python gitignore from the internet
 ### Python template
