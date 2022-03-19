@@ -104,7 +104,7 @@ def item_detail(id):
     # Dont feel like looking up the docs for find() so watch this
     item = {}
     for document in db.get_collection("items").find({}):
-        if document["productID"] == id:
+        if str(document["productID"]) == id:
             item = document
     return render_template("itemPage.html", item=item)
 
