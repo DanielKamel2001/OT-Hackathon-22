@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_session import Session
 from pymongo import MongoClient
 
@@ -16,12 +16,15 @@ db = client.get_database("hackathon")
 print(db.list_collection_names())
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def home():
+    # Get args for cart adding
+    if request.method == 'POST':
+        itemId = request.form.get("cartItem")
+        
     # Get the items from the db
     items = []
     for document in db.get_collection("items").find({}):
-        print(document)
         items.append(document)
     return render_template("index.html", number=7, items=items)
 
@@ -37,7 +40,6 @@ def shop():
 
 @app.route('/itemPage')
 def itemPage():
-
     return render_template("itemPage.html")
 
 
