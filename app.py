@@ -28,7 +28,17 @@ def home():
 
 @app.route('/shop')
 def shop():
-    return render_template("shop.html")
+    items = []
+    for document in db.get_collection("items").find({}):
+        # print(document)
+        items.append(document)
+    return render_template("shop.html", items=items)
+
+
+@app.route('/itemPage')
+def itemPage():
+
+    return render_template("itemPage.html")
 
 
 @app.route('/checkout')
