@@ -3,7 +3,7 @@ from flask_session import Session
 from pymongo import MongoClient
 
 # Configure app - Static folder is where images and javascript live
-app = Flask(__name__, static_folder='static', static_url_path='')
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.config.from_pyfile('cfg.py')
 
 # Configure sessions for keeping track of user data
