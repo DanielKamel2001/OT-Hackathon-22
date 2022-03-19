@@ -59,7 +59,7 @@
                 <img class="productImage" src="/static/imgs/Women in IT Products/{{ item.Image.0}}" alt=""
                      width="100%">
             </div>
-            <a href="{{url_for('itemPage')}}">{ item.Name }}</a>
+            <a href="{{url_for('itemPage')}}">{{ item.Name }}</a>
             <p>${{ item.Price }}</p>
             <form action="{{url_for('add_to_cart')}}" method="POST">
                 <!-- Hidden input is not best practice but this is a hackathon :p -->
@@ -67,6 +67,7 @@
                 <input name="cartItem" type="hidden" value="{{ item.productID }}">
                 <button>Add to cart</button>
             </form>
+            <br>
         </div>
 
         {% else %}}
