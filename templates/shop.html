@@ -40,8 +40,8 @@
         {%for item in items%}
         <div class="item">
             <p>{{ item.Name }}</p>
-{#            <img src="{{url_for('static', filename="{{item.productID}}.png")}}" alt="">#}
-            <img src="/static/imgs/{{ item.productID}}.png" alt="">
+            
+            <img src="/static/imgs/{{ item.productID}}.jpg" alt="">
             <a href="{{url_for('itemPage')}}">item link</a>
             <button>Add to cart</button>
         </div>
