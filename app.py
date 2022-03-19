@@ -72,7 +72,18 @@ def checkout():
 
 @app.route('/bag')
 def bag():
-    return render_template("bag.html")
+    # Get the items from the session and pull details from Mongo
+    cart_list = []
+    if "cart" in session:
+        # Iterate over every item and check if the item is in the cart
+        # Not very performant, but we aren't working at that kind of scale
+        for document in db.get_collection("items").find({}):
+            # The str wraps are very necessary don't ask
+            if str(document["productID"]) in session["cart"]:
+                # Add the cart quantity to the item and put it in the list
+                document["quantity"] = session["cart"][str(document["productID"])]
+                cart_list.append(document)
+    return render_template("bag.html", items=cart_list)
 
 
 @app.route('/about')

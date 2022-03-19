@@ -5,6 +5,10 @@
     <title>Bag</title>
 </head>
 <body>
-
+{% for item in items%}
+<p>U GOT {{item.quantity}} OF {{item.Name}} IT COSTS ${{item.Price}} EACH</p>
+{% else %}
+<p>No items in bag. Itemless even.</p>
+{% endfor %}
 </body>
 </html>
