@@ -134,7 +134,7 @@ def send_checkout():
                     'Body': {
                         'Html': {
                             'Charset': "UTF-8",
-                            'Data': render_template("bag.html", items=get_cart()),
+                            'Data': render_template("emailReceipt.html", items=get_cart()),
                         },
                         'Text': {
                             'Charset': "UTF-8",
@@ -152,6 +152,8 @@ def send_checkout():
         except ClientError as e:
             return e.response['Error']['Message']
         else:
+            # Clear the cart, we've bought it already
+            session["cart"] = []
             return "Email sent! Message ID:" + response['MessageId']
     else:
         return "You have either no email or nothing in bag. Wyd even?"

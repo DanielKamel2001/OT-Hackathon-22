@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Receipt</title>
+</head>
+<body>
+<h1>WiT Shop Receipt</h1>
+<p>Thank you for shopping with us! Here's your receipt:</p>
+{% for item in items%}
+<div class="row">
+    <div class="col-11 d-flex align-items-center border-top">
+        <p class="text-start">{{item.quantity}} x {{item.Name}}</p>
+    </div>
+    <div class="col d-flex align-items-center border-top">
+        <p class="text-end">${{ item.Price*item.quantity }}</p>
+    </div>
+</div>
+{% else %}
+<p>You managed to buy an empty bag. How?</p>
+{% endfor %}
+</body>
+</html>
