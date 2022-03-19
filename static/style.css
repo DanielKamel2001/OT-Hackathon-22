@@ -1,3 +1,8 @@
-*{
-    background-color: goldenrod;
+#navbarNav {
+    background-color: #0077CA; !important;
+    color: white; !important;
+}
+
+.nav-item {
+    color: white; !important;
 }
