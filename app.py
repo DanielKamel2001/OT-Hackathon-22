@@ -41,8 +41,14 @@ def add_to_cart():
         # Create a new cart
         session["cart"] = {item_id: 1}
 
-    # Redirect back to shop page with 302 status
-    return redirect(url_for('shop'), code=303)
+    # Check if the sending page has specified where to return to
+    referrer = request.form.get("referrer")
+    if referrer:
+        # Redirect back to referrer with 302 status
+        return redirect(url_for(referrer), code=303)
+    else:
+        # Redirect back to shop page with 302 status
+        return redirect(url_for('shop'), code=303)
 
 
 @app.route('/shop')
