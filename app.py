@@ -8,6 +8,7 @@ app.config.from_pyfile('cfg.py')
 
 # Configure sessions for keeping track of user data
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_FILE_DIR'] = 'flask_session_files'
 Session(app)
 
 # Connect to Mongo
