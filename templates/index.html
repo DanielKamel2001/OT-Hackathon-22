@@ -44,11 +44,10 @@
 
 
         <div class="col-4 productCard">
-            <p>{{ items[i].Name }}</p>
             <div class="productImageContainer">
                 <img class="productImage" src="/static/imgs/Women in IT Products/{{ items[i].Image.0}}" alt="" width="100%">
             </div>
-            <a href="{{url_for('itemPage')}}">item link</a>
+            <a href="{{url_for('itemPage')}}">{{ items[i].Name }}</a>
             <p>${{ items[i].Price }}</p>
             <form action="{{url_for('add_to_cart')}}" method="POST">
                 <!-- Hidden input is not best practice but this is a hackathon :p -->
