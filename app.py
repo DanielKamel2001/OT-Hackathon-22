@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect, url_for
 from flask_session import Session
 from pymongo import MongoClient
 
@@ -19,22 +19,30 @@ print(db.list_collection_names())
 
 @app.route('/', methods=['POST', 'GET'])
 def home():
-    # Get args for cart adding
-    if request.method == 'POST':
-        item_id = request.form.get("cartItem")
-        if "cart" in session:
-            if item_id in session["cart"]:
-                session["cart"][item_id] += 1
-            else:
-                session["cart"][item_id] = 1
-        else:
-            session["cart"] = {item_id: 1}
-
     # Get the items from the db
     items = []
     for document in db.get_collection("items").find({}):
         items.append(document)
     return render_template("index.html", number=7, items=items)
+
+
+@app.route('/addToCart', methods=['POST'])
+def add_to_cart():
+    item_id = request.form.get("cartItem")
+
+    # Check if cart has been created
+    if "cart" in session:
+        # Check if item exists in cart
+        if item_id in session["cart"]:
+            session["cart"][item_id] += 1
+        else:
+            session["cart"][item_id] = 1
+    else:
+        # Create a new cart
+        session["cart"] = {item_id: 1}
+
+    # Redirect back to shop page with 302 status
+    return redirect(url_for('shop'), code=303)
 
 
 @app.route('/shop')
