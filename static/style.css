@@ -6,3 +6,20 @@
 .nav-item {
     color: white; !important;
 }
+
+
+
+.productCard .productImageContainer {
+
+  width: 50%;
+}
+
+.productCard .productImageContainer:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+
+}
+.productImage{
+    object-fit: contain;
+}
