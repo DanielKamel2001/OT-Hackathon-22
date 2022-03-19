@@ -49,7 +49,7 @@
     <p>${{'{:20,.2f}'.format(item.Price)}}</p>
     <form action="{{url_for('add_to_cart')}}" method="POST">
         <!-- Hidden input is not best practice but this is a hackathon :p -->
-        <input name="referrer" type="hidden" value="item_detail">
+        <input name="referrer" type="hidden" value="bag">
         <input name="cartItem" type="hidden" value="{{ item.productID }}">
         <button class="btn btn-secondary">Add to cart</button>
     </form>
