@@ -166,6 +166,15 @@ def send_checkout():
         return "You have either no email or nothing in bag. Wyd even?"
 
 
+@app.route('/deleteBag', methods=['POST'])
+def delete_item():
+    item_id = request.form.get("cartItem")
+    if item_id in session["cart"]:
+        del session["cart"][item_id]
+    # Redirect back to bag
+    return redirect(url_for('bag'), code=303)
+
+
 @app.route('/bag')
 def bag():
     return render_template("bag.html", items=get_cart())
