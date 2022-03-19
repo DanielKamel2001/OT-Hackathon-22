@@ -101,7 +101,12 @@ def shop():
 @app.route('/item/<id>')
 def item_detail(id):
     # Get the item details from Mongo
-    return render_template("itemPage.html")
+    # Dont feel like looking up the docs for find() so watch this
+    item = {}
+    for document in db.get_collection("items").find({}):
+        if document["productID"] == id:
+            item = document
+    return render_template("itemPage.html", item=item)
 
 
 @app.route('/checkout')
