@@ -107,7 +107,7 @@ def item_detail(id):
         if str(document["productID"]) == id:
             item = document
     if item["Size"] is None:
-        item["Size"] = " "
+        item["Size"] = "One size/style", ""
     return render_template("itemPage.html", item=item)
 
 

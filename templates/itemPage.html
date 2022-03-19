@@ -46,11 +46,13 @@
         <div class="col-sm">
             <h3 class="display-1" style="font-size: 32px">{{ item.Name }}</h3>
             <p>{{ item.Description }}</p>
-            {%for size in item.Size%}
-            {{ size }}
-            {% else %}
-            {{ print("Do nothing") }}
-            {%endfor%}
+            <p>Available sizes/styles:
+                {%for size in item.Size%}
+                {{ size }}
+                {% else %}
+                One size/style
+                {%endfor%}
+            </p>
             <p>${{'{:20,.2f}'.format(item.Price)}}</p>
             <form action="{{url_for('add_to_cart')}}" method="POST">
                 <!-- Hidden input is not best practice but this is a hackathon :p -->
