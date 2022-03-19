@@ -106,6 +106,8 @@ def item_detail(id):
     for document in db.get_collection("items").find({}):
         if str(document["productID"]) == id:
             item = document
+    if item["Size"] is None:
+        item["Size"] = " "
     return render_template("itemPage.html", item=item)
 
 
