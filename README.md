@@ -1,6 +1,7 @@
 ﻿# WIT Webstore
 
 Created for OT Hackathon 22
+
 Ivan Bisol, Daniel Gohara Kamel, Emily Larionov, Jessica Leishman
 
 ## Technology we used
