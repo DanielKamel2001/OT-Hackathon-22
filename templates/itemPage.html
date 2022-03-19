@@ -37,22 +37,29 @@
         </div>
     </div>
 </nav>
-<div class="container">
-    <h1 class="display-1">{{ item.name }}</h1>
-    <img src="/static/imgs/Women in IT Products/{{ item.Image.0}}">
-    <p>{{ item.Description }}</p>
-    {%for size in item.Size%}
-    {{ size }}
-    {% else %}
-    {{ print("Do nothing") }}
-    {%endfor%}
-    <p>${{'{:20,.2f}'.format(item.Price)}}</p>
-    <form action="{{url_for('add_to_cart')}}" method="POST">
-        <!-- Hidden input is not best practice but this is a hackathon :p -->
-        <input name="referrer" type="hidden" value="bag">
-        <input name="cartItem" type="hidden" value="{{ item.productID }}">
-        <button class="btn btn-secondary">Add to cart</button>
-    </form>
+<div class="container" style="padding:50px">
+    <div class="row">
+        <div class="col-sm">
+            <img src="/static/imgs/Women in IT Products/{{ item.Image.0}}">
+        </div>
+
+        <div class="col-sm">
+            <h3 class="display-1" style="font-size: 32px">{{ item.Name }}</h3>
+            <p>{{ item.Description }}</p>
+            {%for size in item.Size%}
+            {{ size }}
+            {% else %}
+            {{ print("Do nothing") }}
+            {%endfor%}
+            <p>${{'{:20,.2f}'.format(item.Price)}}</p>
+            <form action="{{url_for('add_to_cart')}}" method="POST">
+                <!-- Hidden input is not best practice but this is a hackathon :p -->
+                <input name="referrer" type="hidden" value="bag">
+                <input name="cartItem" type="hidden" value="{{ item.productID }}">
+                <button class="btn btn-secondary">Add to cart</button>
+            </form>
+        </div>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
