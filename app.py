@@ -158,8 +158,8 @@ def send_checkout():
             return e.response['Error']['Message']
         else:
             # Clear the cart, we've bought it already
-            session["cart"] = []
-            return "Email sent! Message ID:" + response['MessageId']
+            session["cart"] = {}
+            return render_template("checkoutConfirm.html")
     else:
         return "You have either no email or nothing in bag. Wyd even?"
 
