@@ -1,6 +1,9 @@
 # secret config (don't tell anyone)
 cfg.py
 
+# Flask session filesystem
+flask_session
+
 # Generic python gitignore from the internet
 ### Python template
 # Byte-compiled / optimized / DLL files
