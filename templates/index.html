@@ -56,6 +56,7 @@
             </div>
             <a href="{{url_for('item_detail', id=items[i].productID)}}">{{ items[i].Name }}</a>
             <p>${{ items[i].Price }}</p>
+            <p>${{'{:20,.2f}'.format(items[i].Price)}}</p>
             <form action="{{url_for('add_to_cart')}}" method="POST">
                 <!-- Hidden input is not best practice but this is a hackathon :p -->
                 <input name="referrer" type="hidden" value="shop">
@@ -69,6 +70,10 @@
         {% endfor %}
     </div>
     <button>MORE</button>
+     </div>
+
+    <a href="{{url_for('shop')}}"><button class="btn btn-primary">MORE</button></a>
+
 </div>
 {#
 </body>
