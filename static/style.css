@@ -1,25 +1,25 @@
 #navbarNav {
-    background-color: #0077CA; !important;
-    color: white; !important;
+    background-color: #0077CA;
+!important;
+    color: white;
+!important;
 }
 
 .nav-item {
-    color: white; !important;
+    color: white;
+!important;
 }
 
-
-
-.productCard .productImageContainer {
-
-  width: 50%;
+.productCard {
 }
 
-.productCard .productImageContainer:after {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
-
+.productImageContainer {
+    width: 50%;
 }
-.productImage{
+
+.productImage {
+    width: 200px;
+    height: 200px;
     object-fit: contain;
+    background: #d8d8d8;
 }
