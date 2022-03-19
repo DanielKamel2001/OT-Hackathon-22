@@ -60,7 +60,7 @@
                      width="100%">
             </div>
             <a href="{{url_for('itemPage')}}">{{ item.Name }}</a>
-            <p>${{ item.Price }}</p>
+            <p>${{'{:20,.2f}'.format(item.Price)}}</p>
             <form action="{{url_for('add_to_cart')}}" method="POST">
                 <!-- Hidden input is not best practice but this is a hackathon :p -->
                 <input name="referrer" type="hidden" value="shop">

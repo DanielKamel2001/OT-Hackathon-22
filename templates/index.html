@@ -48,7 +48,7 @@
                 <img class="productImage" src="/static/imgs/Women in IT Products/{{ items[i].Image.0}}" alt="" width="100%">
             </div>
             <a href="{{url_for('itemPage')}}">{{ items[i].Name }}</a>
-            <p>${{ items[i].Price }}</p>
+            <p>${{'{:20,.2f}'.format(items[i].Price)}}</p>
             <form action="{{url_for('add_to_cart')}}" method="POST">
                 <!-- Hidden input is not best practice but this is a hackathon :p -->
                 <input name="referrer" type="hidden" value="shop">
