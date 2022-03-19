@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 </head>
 <body>
@@ -7,4 +7,9 @@
 </body>
 <h1>Hi! Here's a number: {{ number }}</h1>
 <a href="{{url_for('shop')}}">shop</a>
+{% for item in items%}
+<p>{{ item.Name }}</p>
+{% else %}}
+<a>Couldn't load items</a>
+{% endfor %}
 </html>

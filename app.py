@@ -7,14 +7,19 @@ app.config.from_pyfile('cfg.py')
 
 # Connect to Mongo
 client = MongoClient(app.config.get("CONNECTION_STRING"))
-db = client.hackathon
-print(client.list_database_names())
-print(client.server_info())
+db = client.get_database("hackathon")
+print(db.list_collection_names())
 
 
 @app.route('/')
 def home():
-    return render_template("index.html", number=7)
+    # Get the items from the db
+    items = []
+    for document in db.get_collection("items").find({}):
+        print(document)
+        items.append(document)
+    return render_template("index.html", number=7, items=items)
+
 
 @app.route('/shop')
 def shop():
