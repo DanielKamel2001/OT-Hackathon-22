@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_session import Session
 from pymongo import MongoClient
 
@@ -7,7 +7,7 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.config.from_pyfile('cfg.py')
 
 # Configure sessions for keeping track of user data
-SESSION_TYPE = 'mongodb'
+app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
 # Connect to Mongo
@@ -20,8 +20,15 @@ print(db.list_collection_names())
 def home():
     # Get args for cart adding
     if request.method == 'POST':
-        itemId = request.form.get("cartItem")
-        
+        item_id = request.form.get("cartItem")
+        if "cart" in session:
+            if item_id in session["cart"]:
+                session["cart"][item_id] += 1
+            else:
+                session["cart"][item_id] = 1
+        else:
+            session["cart"] = {item_id: 1}
+
     # Get the items from the db
     items = []
     for document in db.get_collection("items").find({}):
