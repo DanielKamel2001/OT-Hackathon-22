@@ -1,3 +1,5 @@
+import random
+
 from flask import Flask, render_template, request, session, redirect, url_for
 from flask_session import Session
 from pymongo import MongoClient
@@ -75,7 +77,25 @@ def shop():
     for document in db.get_collection("items").find({}):
         # print(document)
         items.append(document)
-    return render_template("shop.html", items=items)
+
+    sort = "pop"
+    print(request.args)
+
+    # See if user wants a specific sort
+    if request.args.get("sorts"):
+        sort = request.args.get("sorts")
+        print("sorting by " + sort)
+        if sort == "arr":
+            # They arrived in this order trust me bro
+            random.seed(5318008)
+            random.shuffle(items)
+        elif sort == "low":
+            # Sort low to high
+            items = sorted(items, key=lambda d: d['Price'])
+        elif sort == "high":
+            # Sort high to low
+            items = sorted(items, key=lambda d: d['Price'] * -1)
+    return render_template("shop.html", items=items, sort=sort)
 
 
 @app.route('/itemPage')
@@ -113,7 +133,7 @@ def send_checkout():
                     'Body': {
                         'Html': {
                             'Charset': "UTF-8",
-                            'Data': "<h1>HI</h1>",
+                            'Data': render_template("bag.html", items=get_cart()),
                         },
                         'Text': {
                             'Charset': "UTF-8",
