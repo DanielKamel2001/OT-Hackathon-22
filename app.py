@@ -16,7 +16,6 @@ print(client.server_info())
 def home():
     return render_template("index.html", number=7)
 
-
 @app.route('/shop')
 def shop():
     return render_template("shop.html")
