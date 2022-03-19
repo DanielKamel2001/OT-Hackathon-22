@@ -98,8 +98,9 @@ def shop():
     return render_template("shop.html", items=items, sort=sort)
 
 
-@app.route('/itemPage')
-def itemPage():
+@app.route('/item/<id>')
+def item_detail(id):
+    # Get the item details from Mongo
     return render_template("itemPage.html")
 
 

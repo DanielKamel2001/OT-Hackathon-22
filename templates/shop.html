@@ -45,10 +45,14 @@
         <label for="sorts">Sort by:</label>
         <select id="sorts" name="sorts">
             <!-- Ignore the errors thrown by the IDE pycharm doesn't support templates -->
-            <option value="pop" {{ "selected" if sort == "pop" else "" }}>Popular</option>
-            <option value="arr" {{ "selected" if sort == "arr" else "" }}>New Arrivals</option>
-            <option value="low" {{ "selected" if sort == "low" else "" }}>Price: Low to High</option>
-            <option value="high" {{ "selected" if sort == "high" else "" }}>Price: High to Low</option>
+            <option value="pop" {{
+            "selected" if sort == "pop" else "" }}>Popular</option>
+            <option value="arr" {{
+            "selected" if sort == "arr" else "" }}>New Arrivals</option>
+            <option value="low" {{
+            "selected" if sort == "low" else "" }}>Price: Low to High</option>
+            <option value="high" {{
+            "selected" if sort == "high" else "" }}>Price: High to Low</option>
         </select>
         <input type="submit" value="Go">
     </form>
@@ -56,10 +60,12 @@
         {%for item in items%}
         <div class="col-4 productCard">
             <div class="productImageContainer">
-                <img class="productImage" src="/static/imgs/Women in IT Products/{{ item.Image.0}}" alt=""
-                     width="100%">
+                <a href="{{url_for('item_detail', id=item.productID)}}"><img class="productImage"
+                                                                             src="/static/imgs/Women in IT Products/{{ item.Image.0}}"
+                                                                             alt=""
+                                                                             width="100%"></a>
             </div>
-            <a href="{{url_for('itemPage')}}">{{ item.Name }}</a>
+            <a href="{{url_for('item_detail', id=item.productID)}}">{{ item.Name }}</a>
             <p>${{ item.Price }}</p>
             <form action="{{url_for('add_to_cart')}}" method="POST">
                 <!-- Hidden input is not best practice but this is a hackathon :p -->
