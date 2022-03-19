@@ -54,8 +54,9 @@
             <option value="high" {{
             "selected" if sort == "high" else "" }}>Price: High to Low</option>
         </select>
-        <input type="submit" value="Go">
+        <input type="submit" class="btn btn-success" value="Go">
     </form>
+    <br>
     <div class="row align-items-start">
         {%for item in items%}
         <div class="col-4 productCard">
