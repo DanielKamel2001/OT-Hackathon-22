@@ -1,8 +1,15 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template
+from pymongo import MongoClient
 
 # Configure app - Static folder is where images and javascript live
-app = Flask(__name__, static_folder='public', static_url_path='')
-# app.config.from_pyfile('cfg.py')
+app = Flask(__name__, static_folder='static', static_url_path='')
+app.config.from_pyfile('cfg.py')
+
+# Connect to Mongo
+client = MongoClient(app.config.get("CONNECTION_STRING"))
+db = client.hackathon
+print(client.list_database_names())
+print(client.server_info())
 
 
 @app.route('/')
